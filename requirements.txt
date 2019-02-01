@@ -1,0 +1,4 @@
+click
+sonarqube_api
+termcolor
+requests
