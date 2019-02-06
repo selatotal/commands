@@ -4,6 +4,7 @@ from click import UsageError
 from gitlab_local.gitlab import Gitlab
 from config.config import Config
 from jenkins_local.jenkins import Jenkins
+from slack_local.slack import Slack
 from sonar.sonar import Sonar
 
 __author__ = 'Tales Viegas'
@@ -57,13 +58,29 @@ def jenkins(command):
     jenkins_client = Jenkins(config.cfg['jenkins']['url'],
                              config.cfg['jenkins']['username'],
                              config.cfg['jenkins']['token'],
-                             config.cfg['jenkins']['email'])
+                             config.cfg['jenkins']['email'],
+                             config.cfg['jenkins']['integrateSlack'],
+                             config.cfg['jenkins']['slackChannel'],
+                             config.cfg['slack']['token'])
     if command.lower() == 'build':
-        if config.cfg['jenkins']['integratedBuild']:
-            return jenkins_client.integrated_build(config.cfg['gitlab']['url'], config.cfg['gitlab']['token'])
+        if config.cfg['jenkins']['integrateGitlab']:
+            return jenkins_client.integrated_gitlab_build(config.cfg['gitlab']['url'], config.cfg['gitlab']['token'])
         else:
             return jenkins_client.normal_build()
     raise UsageError("Invalid command")
+
+
+@cli.command()
+@click.argument('message', default='')
+def slack(message):
+
+    """
+    Slack Commands
+
+    send - Send message to slack
+    """
+    slack_client = Slack(config.cfg['slack']['token'])
+    slack_client.send_message('test', message)
 
 
 if __name__ == "__main__":

@@ -5,13 +5,23 @@ from click._unicodefun import click
 from prompt_toolkit import prompt
 from prompt_toolkit.contrib.completers import WordCompleter
 
+from slack_local.slack import Slack
+
 
 class Gitlab:
 
     gl = None
+    integrate_slack = False
+    slack_channel = None
+    slack = None
 
-    def __init__(self, server, token):
+    def __init__(self, server, token, integrate_slack=False, slack_channel=None, slack_token=None):
         self.gl = gitlab.Gitlab(server, private_token=token)
+        self.slack_token = slack_token
+        self.integrate_slack = integrate_slack
+        self.slack_channel = slack_channel
+        if integrate_slack:
+            self.slack = Slack(token)
 
     def get_all_projects(self):
         projects = []
@@ -34,10 +44,10 @@ class Gitlab:
 
     def get_project_choice(self):
         projects = self.get_all_projects()
-        projlist = []
+        project_list = []
         for project in projects:
-            projlist.append(project.name)
-        return projlist
+            project_list.append(project.name)
+        return project_list
 
     def ask_project(self):
         completer = WordCompleter(self.get_project_choice(), sentence=True)
@@ -71,4 +81,10 @@ class Gitlab:
         if not code_review:
             mr.merge()
         else:
+            message = "Code review - {} - {}/diffs <!here> :top:".format(
+                title,
+                mr.web_url
+            )
             pprint(mr.web_url)
+            if self.integrate_slack:
+                self.slack.send_message(self.slack_channel, message)
