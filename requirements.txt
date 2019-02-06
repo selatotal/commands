@@ -4,3 +4,4 @@ termcolor
 requests
 python_gitlab
 prompt-toolkit>=0.57, <2.0.0
+jenkinsapi

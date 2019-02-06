@@ -21,9 +21,18 @@ Create config.json file with following data:
   "gitlab" : {
     "url" : "GITLAB URL",
     "token": "GITLAB USER TOKEN"
+  },
+  "jenkins" : {
+    "url" : "JENKINS URL",
+    "username" : "JENKINS USERNAME",
+    "token": "JENKINS USER TOKEN OR PASSWORD",
+    "email": "email@tosend.result",
+    "integratedBuild": true  
   }
 }
+
 ```
+Set jenkins.integratedBuild to true to integrate Gitlab/Jenkins projects
 
 Sample:
 ```json
@@ -35,6 +44,13 @@ Sample:
   "gitlab" : {
     "url" : "https://gitlab.com",
     "token": "1231241419831g123123"
+  },
+  "jenkins" : {
+    "url" : "http://jenkins.com",
+    "username" : "username",
+    "token": "1231241419831g123123",
+    "email": "email@tosend.result",
+    "integratedBuild": true
   }
 }
 ```
@@ -60,6 +76,17 @@ List of Commands
   - merge - Create merge request
 ``` 
 
+### Jenkins
+
+Jenkins commands
+
 # License
+
+```bash
+$ python3 commands.py jenkins [COMMAND]
+
+List of Commands
+  - build - Build a job
+``` 
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License)

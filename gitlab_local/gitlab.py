@@ -44,6 +44,11 @@ class Gitlab:
         answers = prompt("Choose project: ", completer=completer)
         return answers
 
+    def ask_branch(self, project):
+        completer = WordCompleter(self.get_project_branches(project), sentence=True)
+        answers = prompt("Choose branch: ", completer=completer)
+        return answers
+
     @staticmethod
     def get_project_branches(project):
         branches = []
