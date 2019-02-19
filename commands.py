@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import click
 from click import UsageError
 
@@ -41,7 +42,7 @@ def gitlab(command):
 
     merge - Create Merge Request
     """
-    gitlab_client = Gitlab(config.cfg['gitlab']['url'], config.cfg['gitlab']['token'])
+    gitlab_client = Gitlab(config.cfg['gitlab']['url'], config.cfg['gitlab']['token'], config['gitlab']['integrateSlack'], config['gitlab']['slackChannel'], config['slack']['token'])
     if command.lower() == 'merge':
         return gitlab_client.merge()
     raise UsageError("Invalid command")
