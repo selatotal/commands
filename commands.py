@@ -42,7 +42,7 @@ def gitlab(command):
 
     merge - Create Merge Request
     """
-    gitlab_client = Gitlab(config.cfg['gitlab']['url'], config.cfg['gitlab']['token'], config.cfg['gitlab']['integrateSlack'], config.cfg['gitlab']['slackChannel'], config.cfg['slack']['token'])
+    gitlab_client = Gitlab(config.cfg['gitlab']['url'], config.cfg['gitlab']['token'], integrate_slack=config.cfg['gitlab']['integrateSlack'], slack_channel=config.cfg['gitlab']['slackChannel'], slack_token=config.cfg['slack']['token'])
     if command.lower() == 'merge':
         return gitlab_client.merge()
     raise UsageError("Invalid command")

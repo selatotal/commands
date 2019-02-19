@@ -20,8 +20,8 @@ class Gitlab:
         self.slack_token = slack_token
         self.integrate_slack = integrate_slack
         self.slack_channel = slack_channel
-        if integrate_slack:
-            self.slack = Slack(token)
+        if self.integrate_slack:
+            self.slack = Slack(slack_token)
 
     def get_all_projects(self):
         projects = []
@@ -85,6 +85,5 @@ class Gitlab:
                 title,
                 mr.web_url
             )
-            pprint(mr.web_url)
             if self.integrate_slack:
                 self.slack.send_message(self.slack_channel, message)
