@@ -94,7 +94,6 @@ List of Commands
 
 Jenkins commands
 
-# License
 
 ```bash
 $ python3 commands.py jenkins [COMMAND]
@@ -102,5 +101,21 @@ $ python3 commands.py jenkins [COMMAND]
 List of Commands
   - build - Build a job
 ``` 
+
+# Genarating Tokens
+
+Generate Jenkins tokens
+
+> http://URL_JENKINS/user/USER_JENKINS/configure
+
+Generate Gitlab tokens:
+
+> http://URL_GITLAB/profile/personal_access_tokens
+
+Generate Slack tokens:
+
+> https://api.slack.com/custom-integrations/legacy-tokens
+
+# License
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License)
